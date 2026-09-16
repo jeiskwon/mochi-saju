@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>모찌 수호정령 · 개인화·궁합초대 개선 v1.2</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>모찌 수호정령 · 티스토리 Book Club 연동 v1.3</title>
 <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
 <style>
 :root{--bg:#fffaf5;--card:#fffefa;--text:#342d29;--muted:#82756e;--line:#eadfd6;--accent:#7ba86e;--accent2:#456d49;--soft:#edf7e8}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fffaf4 0,#fff 35%,#f8f4ff 100%);font-family:system-ui,-apple-system,"Pretendard","Noto Sans KR",sans-serif;color:var(--text)}button,input,select{font:inherit}.wrap{max-width:760px;margin:auto;padding:20px 16px 70px}.top{text-align:center;padding:34px 12px 18px}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.12em;color:#9a786a}.top h1{font-size:31px;line-height:1.25;margin:7px 0 10px}.top p{color:var(--muted);line-height:1.65;margin:0}.card{background:rgba(255,254,250,.95);border:1px solid var(--line);border-radius:25px;padding:20px;margin:15px 0;box-shadow:0 12px 32px rgba(86,60,38,.07)}.toggle{display:flex;gap:8px;margin-bottom:15px}.toggle button{flex:1;border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px;font-weight:800;color:var(--muted);cursor:pointer}.toggle button.active{background:var(--soft);border-color:var(--accent);color:var(--accent2)}.row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}.field input,.field select{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;color:var(--text)}.check{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;margin-top:12px}.primary,.ghost{width:100%;border-radius:17px;padding:14px;font-weight:900;cursor:pointer;margin-top:16px}.primary{border:0;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}.ghost{border:1px solid color-mix(in srgb,var(--accent) 55%,#ddd);background:var(--soft);color:var(--accent2)}.note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:10px}.error{font-size:13px;color:#b94356;font-weight:800;margin-top:10px}.hide{display:none!important}
@@ -122,7 +122,7 @@
 </head><body><div class="wrap">
 
 <section class="top landingTop" id="landingTop">
-  <div class="eyebrow">MOCHI GUARDIANS · LOVE EDITION · v1.2</div>
+  <div class="eyebrow">MOCHI GUARDIANS · LOVE EDITION · v1.3</div>
   <h1>어떤 모습의 수호정령을<br>만나볼까요?</h1>
   <p>같은 운명도, 취향에 따라 다른 모습으로 만날 수 있어요.<br>옆으로 밀어 마음에 드는 세계를 골라보세요.</p>
 </section>
@@ -786,4 +786,33 @@ if(q&&byId[q]){
   document.getElementById('inputCard').classList.add('hide');
   renderCharacter(byId[q].stem,null,true,qd);
 }
+
+// Tistory Book Club iframe 자동 높이 연동
+(function(){
+  let lastHeight=0, raf=0;
+  function reportHeight(){
+    cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(()=>{
+      const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+      if(Math.abs(h-lastHeight)>2){
+        lastHeight=h;
+        if(window.parent&&window.parent!==window){
+          window.parent.postMessage({type:'MOCHI_SAJU_HEIGHT',height:h},'*');
+        }
+      }
+    });
+  }
+  window.addEventListener('load',reportHeight);
+  window.addEventListener('resize',reportHeight,{passive:true});
+  document.addEventListener('click',()=>setTimeout(reportHeight,80),true);
+  document.addEventListener('input',()=>setTimeout(reportHeight,80),true);
+  if('ResizeObserver' in window){
+    new ResizeObserver(reportHeight).observe(document.documentElement);
+  }else{
+    setInterval(reportHeight,800);
+  }
+  setTimeout(reportHeight,200);
+  setTimeout(reportHeight,1000);
+})();
+
 </script></body></html>
