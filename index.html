@@ -122,7 +122,7 @@
 </head><body><div class="wrap">
 
 <section class="top landingTop" id="landingTop">
-  <div class="eyebrow">MOCHI GUARDIANS · LOVE EDITION · v1.3</div>
+  <div class="eyebrow">MOCHI GUARDIANS · LOVE EDITION · v1.3.1</div>
   <h1>어떤 모습의 수호정령을<br>만나볼까요?</h1>
   <p>같은 운명도, 취향에 따라 다른 모습으로 만날 수 있어요.<br>옆으로 밀어 마음에 드는 세계를 골라보세요.</p>
 </section>
@@ -787,14 +787,22 @@ if(q&&byId[q]){
   renderCharacter(byId[q].stem,null,true,qd);
 }
 
-// Tistory Book Club iframe 자동 높이 연동
+// Tistory Book Club iframe 자동 높이 연동 v1.3.1
+// viewport 높이가 커질수록 scrollHeight도 커지는 순환 증폭을 피하기 위해
+// 실제 콘텐츠 컨테이너(.wrap)의 높이만 측정합니다.
 (function(){
   let lastHeight=0, raf=0;
+  const root=document.querySelector('.wrap');
+  function contentHeight(){
+    if(!root)return 900;
+    const r=root.getBoundingClientRect();
+    return Math.ceil(r.height + 4);
+  }
   function reportHeight(){
     cancelAnimationFrame(raf);
     raf=requestAnimationFrame(()=>{
-      const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
-      if(Math.abs(h-lastHeight)>2){
+      const h=contentHeight();
+      if(h>420 && h<9000 && Math.abs(h-lastHeight)>3){
         lastHeight=h;
         if(window.parent&&window.parent!==window){
           window.parent.postMessage({type:'MOCHI_SAJU_HEIGHT',height:h},'*');
@@ -803,16 +811,16 @@ if(q&&byId[q]){
     });
   }
   window.addEventListener('load',reportHeight);
-  window.addEventListener('resize',reportHeight,{passive:true});
-  document.addEventListener('click',()=>setTimeout(reportHeight,80),true);
-  document.addEventListener('input',()=>setTimeout(reportHeight,80),true);
-  if('ResizeObserver' in window){
-    new ResizeObserver(reportHeight).observe(document.documentElement);
+  document.addEventListener('click',()=>setTimeout(reportHeight,120),true);
+  document.addEventListener('input',()=>setTimeout(reportHeight,120),true);
+  document.addEventListener('change',()=>setTimeout(reportHeight,120),true);
+  if('ResizeObserver' in window && root){
+    new ResizeObserver(reportHeight).observe(root);
   }else{
-    setInterval(reportHeight,800);
+    setInterval(reportHeight,1000);
   }
-  setTimeout(reportHeight,200);
-  setTimeout(reportHeight,1000);
+  setTimeout(reportHeight,150);
+  setTimeout(reportHeight,700);
 })();
 
 </script></body></html>
