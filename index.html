@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>모찌 수호정령 · 티스토리 체류형 공유 v1.4.1 · PLAYZIP 결과전용</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>모찌 수호정령 · 티스토리 체류형 공유 v1.4.2 · PLAYZIP 모바일 CTA 보정</title>
 <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
 <style>
 :root{--bg:#fffaf5;--card:#fffefa;--text:#342d29;--muted:#82756e;--line:#eadfd6;--accent:#7ba86e;--accent2:#456d49;--soft:#edf7e8}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fffaf4 0,#fff 35%,#f8f4ff 100%);font-family:system-ui,-apple-system,"Pretendard","Noto Sans KR",sans-serif;color:var(--text)}button,input,select{font:inherit}.wrap{max-width:760px;margin:auto;padding:20px 16px 70px}.top{text-align:center;padding:34px 12px 18px}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.12em;color:#9a786a}.top h1{font-size:31px;line-height:1.25;margin:7px 0 10px}.top p{color:var(--muted);line-height:1.65;margin:0}.card{background:rgba(255,254,250,.95);border:1px solid var(--line);border-radius:25px;padding:20px;margin:15px 0;box-shadow:0 12px 32px rgba(86,60,38,.07)}.toggle{display:flex;gap:8px;margin-bottom:15px}.toggle button{flex:1;border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px;font-weight:800;color:var(--muted);cursor:pointer}.toggle button.active{background:var(--soft);border-color:var(--accent);color:var(--accent2)}.row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}.field input,.field select{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;color:var(--text)}.check{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;margin-top:12px}.primary,.ghost{width:100%;border-radius:17px;padding:14px;font-weight:900;cursor:pointer;margin-top:16px}.primary{border:0;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}.ghost{border:1px solid color-mix(in srgb,var(--accent) 55%,#ddd);background:var(--soft);color:var(--accent2)}.note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:10px}.error{font-size:13px;color:#b94356;font-weight:800;margin-top:10px}.hide{display:none!important}
@@ -330,7 +330,7 @@
      style="display:block;text-decoration:none;background:linear-gradient(135deg,#8164d8,#ed75a8);color:#fff;padding:14px 16px;border-radius:15px;font-weight:900;margin-bottom:9px">
     PLAYZIP에서 다른 콘텐츠 보기 →
   </a>
-  <a href="https://tech-asset.tistory.com/pages/PLAYZIP#install"
+  <a id="playzipInstallResultLink" href="https://tech-asset.tistory.com/pages/PLAYZIP#install"
      target="_top"
      style="display:block;text-decoration:none;border:1px solid #ddd2f1;background:#fff;color:#675591;padding:12px 16px;border-radius:15px;font-weight:800">
     📱 다음에도 바로 오도록 홈 화면에 추가
@@ -842,4 +842,12 @@ if(q&&byId[q]){
   setTimeout(reportHeight,700);
 })();
 
-</script></body></html>
+</script>
+<script>
+(function(){
+  var isMobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent||'');
+  var el=document.getElementById('playzipInstallResultLink');
+  if(el && !isMobile){ el.style.display='none'; }
+})();
+</script>
+</body></html>
