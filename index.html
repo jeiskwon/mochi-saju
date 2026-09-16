@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>모찌 수호정령 · 티스토리 Book Club 연동 v1.3</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>모찌 수호정령 · 티스토리 체류형 공유 v1.4</title>
 <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
 <style>
 :root{--bg:#fffaf5;--card:#fffefa;--text:#342d29;--muted:#82756e;--line:#eadfd6;--accent:#7ba86e;--accent2:#456d49;--soft:#edf7e8}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fffaf4 0,#fff 35%,#f8f4ff 100%);font-family:system-ui,-apple-system,"Pretendard","Noto Sans KR",sans-serif;color:var(--text)}button,input,select{font:inherit}.wrap{max-width:760px;margin:auto;padding:20px 16px 70px}.top{text-align:center;padding:34px 12px 18px}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.12em;color:#9a786a}.top h1{font-size:31px;line-height:1.25;margin:7px 0 10px}.top p{color:var(--muted);line-height:1.65;margin:0}.card{background:rgba(255,254,250,.95);border:1px solid var(--line);border-radius:25px;padding:20px;margin:15px 0;box-shadow:0 12px 32px rgba(86,60,38,.07)}.toggle{display:flex;gap:8px;margin-bottom:15px}.toggle button{flex:1;border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px;font-weight:800;color:var(--muted);cursor:pointer}.toggle button.active{background:var(--soft);border-color:var(--accent);color:var(--accent2)}.row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}.field input,.field select{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;color:var(--text)}.check{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;margin-top:12px}.primary,.ghost{width:100%;border-radius:17px;padding:14px;font-weight:900;cursor:pointer;margin-top:16px}.primary{border:0;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}.ghost{border:1px solid color-mix(in srgb,var(--accent) 55%,#ddd);background:var(--soft);color:var(--accent2)}.note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:10px}.error{font-size:13px;color:#b94356;font-weight:800;margin-top:10px}.hide{display:none!important}
@@ -122,7 +122,7 @@
 </head><body><div class="wrap">
 
 <section class="top landingTop" id="landingTop">
-  <div class="eyebrow">MOCHI GUARDIANS · LOVE EDITION · v1.3.1</div>
+  <div class="eyebrow">MOCHI GUARDIANS · LOVE EDITION · v1.4.1</div>
   <h1>어떤 모습의 수호정령을<br>만나볼까요?</h1>
   <p>같은 운명도, 취향에 따라 다른 모습으로 만날 수 있어요.<br>옆으로 밀어 마음에 드는 세계를 골라보세요.</p>
 </section>
@@ -620,11 +620,14 @@ $('matchJumpBtn').onclick=()=>{
 $('compatBtn').onclick=()=>{try{$('compatError').textContent='';if(!myStem)throw Error('먼저 내 수호정령을 확인해주세요.');partnerName=cleanUserName($('partnerName')?.value||partnerName);if(!partnerName)throw Error('상대 이름 또는 별명을 입력해주세요.');sessionStorage.setItem('mochiPartnerName',partnerName);const ps=partnerStem(),cp=compatibility(myStem,ps),a=characterMap[myStem],b=characterMap[ps];$('partnerCompatImg').src=resultImageFor(b);$('compatNames').innerHTML=`<strong>${viewerLabel()} × ${partnerLabel()}</strong><small>${ownerLabel()} · ${a.name} &nbsp;♡&nbsp; ${partnerLabel()}의 수호정령 · ${b.name}</small>`;$('compatGuardianNames').textContent=`${a.ko} ${a.han} · ${b.ko} ${b.han}`;$('compatLabel').textContent=cp.label;$('overallScore').textContent=cp.overall;$('romanceScore').textContent=cp.romance;$('friendScore').textContent=cp.friendship;$('teamScore').textContent=cp.teamwork;$('compatGrade').textContent=cp.grade;$('relationText').textContent=cp.relationText;$('polarityText').textContent=cp.polarityText;$('compatTip').textContent=cp.tip;$('compatResult').classList.remove('hide');$('compatResult').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){$('compatError').textContent=e.message||String(e)}};
 const SHARE_CONFIG=window.MOCHI_SHARE_CONFIG||{};
 const KAKAO_JS_KEY=(SHARE_CONFIG.kakaoJavaScriptKey||'').trim();
-const PUBLIC_BASE_URL=(SHARE_CONFIG.publicBaseUrl||'https://jeiskwon.github.io/mochi-saju/').replace(/\/?$/,'/');
+const APP_BASE_URL=(SHARE_CONFIG.publicBaseUrl||'https://jeiskwon.github.io/mochi-saju/').replace(/\/?$/,'/');
+const BLOG_PAGE_URL='https://tech-asset.tistory.com/99';
 
+// 공유/초대 버튼의 목적지는 Tistory 글(99번)입니다.
+// GitHub Pages는 iframe 실행 엔진과 이미지 호스팅 용도로만 사용합니다.
 function shareUrl(){
   const c=characterMap[myStem];
-  const u=new URL(PUBLIC_BASE_URL);
+  const u=new URL(BLOG_PAGE_URL);
   u.searchParams.set('type',c.id);
   u.searchParams.set('style',selectedStyle);
   u.searchParams.set('d',(window.currentDailyLove||{}).dateKey||dateKeyNow());
@@ -633,10 +636,10 @@ function shareUrl(){
 }
 function shareImageFor(c,style=selectedStyle){
   const s=styleMeta[style]?style:'A';
-  return `${PUBLIC_BASE_URL}assets/share/${s}/${c.id}.jpg`;
+  return `${APP_BASE_URL}assets/share/${s}/${c.id}.jpg`;
 }
 function baseServiceUrl(){
-  return PUBLIC_BASE_URL;
+  return BLOG_PAGE_URL;
 }
 function inviteUrl(){
   const u=new URL(baseServiceUrl());
@@ -682,7 +685,7 @@ $('inviteMatchBtn').onclick=()=>{
       content:{
         title:`${inviter}님이 함께 연애 궁합을 보자고 초대했어요 💞`,
         description:'이름과 생년월일만 넣으면 두 사람의 궁합을 바로 확인할 수 있어요.',
-        imageUrl:`${PUBLIC_BASE_URL}assets/share/default.jpg`,
+        imageUrl:`${APP_BASE_URL}assets/share/default.jpg`,
         imageWidth:1200,
         imageHeight:630,
         link:{mobileWebUrl:url,webUrl:url}
