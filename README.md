@@ -1,23 +1,9 @@
-# mochi-saju
+# 모찌 수호정령
 
-모찌 수호정령 캐릭터 사주 프로젝트입니다.
+모찌 수호정령 캐릭터 사주/연애운 프로젝트의 GitHub Pages 독립 실행 버전입니다.
 
-## 현재 작업 버전
-- v0.5 LOVE EDITION 준비 완료
-- 핵심: 고정 수호정령 + 날짜별 오늘의 연애운
-- 같은 날짜 + 같은 수호정령이면 같은 오늘의 연애운 결과
-- 페이지용 이미지: WebP
-- 카카오 공유용 이미지: JPG 1200×630
-- 운세/설명 글자는 이미지에 넣지 않고 HTML/CSS 텍스트로 출력
-
-## v0.5 주요 기능
-- 오늘의 연애운 100점 점수
-- 썸지수 / 연락운 / 고백운 / 데이트운
-- 오늘의 한마디
-- 플러팅 팁 / 연락 추천 시간 / 금지 행동 / 오늘의 무드
-- 오늘 잘 맞는 타입 / 이상하게 신경 쓰이는 타입
-- 공유 URL에는 캐릭터 type과 날짜 d만 포함하며 생년월일·출생시간은 포함하지 않음
-- Kakao Share.sendDefault 구조 준비 완료
-
-## 남은 배포 작업
-현재 연결된 GitHub 도구는 로컬 바이너리 WebP/JPG를 직접 업로드할 수 없어, v0.5 전체 패키지의 `assets` 폴더 업로드와 `index.html` 교체가 필요합니다. 이후 GitHub Pages와 Kakao Developers JavaScript 키/도메인 설정을 연결합니다.
+- 실행: https://jeiskwon.github.io/mochi-saju/
+- PLAYZIP: https://jeiskwon.github.io/playzip/
+- 공유 결과와 궁합 초대는 GitHub Pages 내부에서 바로 열립니다.
+- 공유 URL에는 생년월일과 출생시간을 넣지 않습니다.
+- 결과 이미지와 카카오 공유 이미지는 `assets/`에서 관리합니다.
