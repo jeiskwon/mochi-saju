@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>모찌 수호정령 · 티스토리 체류형 공유 v1.4.2 · PLAYZIP 모바일 CTA 보정</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>모찌 수호정령 · GitHub 독립 실행 · PLAYZIP</title>
 <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
 <style>
 :root{--bg:#fffaf5;--card:#fffefa;--text:#342d29;--muted:#82756e;--line:#eadfd6;--accent:#7ba86e;--accent2:#456d49;--soft:#edf7e8}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fffaf4 0,#fff 35%,#f8f4ff 100%);font-family:system-ui,-apple-system,"Pretendard","Noto Sans KR",sans-serif;color:var(--text)}button,input,select{font:inherit}.wrap{max-width:760px;margin:auto;padding:20px 16px 70px}.top{text-align:center;padding:34px 12px 18px}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.12em;color:#9a786a}.top h1{font-size:31px;line-height:1.25;margin:7px 0 10px}.top p{color:var(--muted);line-height:1.65;margin:0}.card{background:rgba(255,254,250,.95);border:1px solid var(--line);border-radius:25px;padding:20px;margin:15px 0;box-shadow:0 12px 32px rgba(86,60,38,.07)}.toggle{display:flex;gap:8px;margin-bottom:15px}.toggle button{flex:1;border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px;font-weight:800;color:var(--muted);cursor:pointer}.toggle button.active{background:var(--soft);border-color:var(--accent);color:var(--accent2)}.row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}.field input,.field select{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;color:var(--text)}.check{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;margin-top:12px}.primary,.ghost{width:100%;border-radius:17px;padding:14px;font-weight:900;cursor:pointer;margin-top:16px}.primary{border:0;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}.ghost{border:1px solid color-mix(in srgb,var(--accent) 55%,#ddd);background:var(--soft);color:var(--accent2)}.note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:10px}.error{font-size:13px;color:#b94356;font-weight:800;margin-top:10px}.hide{display:none!important}
@@ -325,12 +325,12 @@
 <section class="card" id="playzipResultOnly" style="text-align:center;background:linear-gradient(145deg,#fffefa,#faf6ff);border-color:#e2d8f3">
   <div style="font-size:18px;font-weight:950;margin-bottom:6px;color:#3f3834">다른 것도 해볼까요?</div>
   <div style="font-size:13px;line-height:1.65;color:var(--muted);margin-bottom:13px">사주 · 타로 · 나BTI를 PLAYZIP에서 골라 즐겨보세요.</div>
-  <a href="https://tech-asset.tistory.com/pages/PLAYZIP"
+  <a href="https://jeiskwon.github.io/playzip/"
      target="_top"
      style="display:block;text-decoration:none;background:linear-gradient(135deg,#8164d8,#ed75a8);color:#fff;padding:14px 16px;border-radius:15px;font-weight:900;margin-bottom:9px">
     PLAYZIP에서 다른 콘텐츠 보기 →
   </a>
-  <a id="playzipInstallResultLink" href="https://tech-asset.tistory.com/pages/PLAYZIP#install"
+  <a id="playzipInstallResultLink" href="https://jeiskwon.github.io/playzip/#install"
      target="_top"
      style="display:block;text-decoration:none;border:1px solid #ddd2f1;background:#fff;color:#675591;padding:12px 16px;border-radius:15px;font-weight:800">
     📱 다음에도 바로 오도록 홈 화면에 추가
@@ -637,13 +637,12 @@ $('compatBtn').onclick=()=>{try{$('compatError').textContent='';if(!myStem)throw
 const SHARE_CONFIG=window.MOCHI_SHARE_CONFIG||{};
 const KAKAO_JS_KEY=(SHARE_CONFIG.kakaoJavaScriptKey||'').trim();
 const APP_BASE_URL=(SHARE_CONFIG.publicBaseUrl||'https://jeiskwon.github.io/mochi-saju/').replace(/\/?$/,'/');
-const BLOG_PAGE_URL='https://tech-asset.tistory.com/99';
+const SERVICE_PAGE_URL=APP_BASE_URL;
 
-// 공유/초대 버튼의 목적지는 Tistory 글(99번)입니다.
-// GitHub Pages는 iframe 실행 엔진과 이미지 호스팅 용도로만 사용합니다.
+// 공유 결과와 궁합 초대는 GitHub Pages의 모찌 수호정령 앱으로 바로 연결합니다.
 function shareUrl(){
   const c=characterMap[myStem];
-  const u=new URL(BLOG_PAGE_URL);
+  const u=new URL(SERVICE_PAGE_URL);
   u.searchParams.set('type',c.id);
   u.searchParams.set('style',selectedStyle);
   u.searchParams.set('d',(window.currentDailyLove||{}).dateKey||dateKeyNow());
@@ -655,7 +654,7 @@ function shareImageFor(c,style=selectedStyle){
   return `${APP_BASE_URL}assets/share/${s}/${c.id}.jpg`;
 }
 function baseServiceUrl(){
-  return BLOG_PAGE_URL;
+  return SERVICE_PAGE_URL;
 }
 function inviteUrl(){
   const u=new URL(baseServiceUrl());
@@ -806,41 +805,6 @@ if(q&&byId[q]){
   renderCharacter(byId[q].stem,null,true,qd);
 }
 
-// Tistory Book Club iframe 자동 높이 연동 v1.3.1
-// viewport 높이가 커질수록 scrollHeight도 커지는 순환 증폭을 피하기 위해
-// 실제 콘텐츠 컨테이너(.wrap)의 높이만 측정합니다.
-(function(){
-  let lastHeight=0, raf=0;
-  const root=document.querySelector('.wrap');
-  function contentHeight(){
-    if(!root)return 900;
-    const r=root.getBoundingClientRect();
-    return Math.ceil(r.height + 4);
-  }
-  function reportHeight(){
-    cancelAnimationFrame(raf);
-    raf=requestAnimationFrame(()=>{
-      const h=contentHeight();
-      if(h>420 && h<9000 && Math.abs(h-lastHeight)>3){
-        lastHeight=h;
-        if(window.parent&&window.parent!==window){
-          window.parent.postMessage({type:'MOCHI_SAJU_HEIGHT',height:h},'*');
-        }
-      }
-    });
-  }
-  window.addEventListener('load',reportHeight);
-  document.addEventListener('click',()=>setTimeout(reportHeight,120),true);
-  document.addEventListener('input',()=>setTimeout(reportHeight,120),true);
-  document.addEventListener('change',()=>setTimeout(reportHeight,120),true);
-  if('ResizeObserver' in window && root){
-    new ResizeObserver(reportHeight).observe(root);
-  }else{
-    setInterval(reportHeight,1000);
-  }
-  setTimeout(reportHeight,150);
-  setTimeout(reportHeight,700);
-})();
 
 </script>
 <script>
